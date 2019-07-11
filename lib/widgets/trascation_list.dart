@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 450,
         child: 
         _listOfTx.isEmpty ? Column(children: <Widget>[
           Text(
@@ -28,7 +28,8 @@ class TransactionList extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-        ],) :ListView.builder(
+        ],) 
+        :ListView.builder(
           itemBuilder: (ctx, index) {
             return Card(
                 elevation: 10,
