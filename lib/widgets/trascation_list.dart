@@ -10,7 +10,9 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _listOfTx.isEmpty ? Column(children: <Widget>[
+    return _listOfTx.isEmpty ? LayoutBuilder(
+      builder: (context, constraints){
+        return Column(children: <Widget>[
           Text(
             'No transaction added yet!',
             style: Theme.of(context).textTheme.title,
@@ -25,31 +27,33 @@ class TransactionList extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-        ],) 
-        :ListView.builder(
-          itemBuilder: (ctx, index) {
-            return Card(
-                elevation: 10,
-                child: ListTile(
-                leading: CircleAvatar(
-                  radius: 30,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: FittedBox(
-                        child: Text('\$${_listOfTx[index].amount}')
-                      ),
-                  ),
+        ],);
+      },
+    ) 
+      :ListView.builder(
+        itemBuilder: (ctx, index) {
+          return Card(
+              elevation: 10,
+              child: ListTile(
+              leading: CircleAvatar(
+                radius: 30,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: FittedBox(
+                      child: Text('\$${_listOfTx[index].amount}')
+                    ),
                 ),
-                title: Text(_listOfTx[index].title, style: Theme.of(context).textTheme.title,),
-                subtitle: Text(DateFormat.yMMMd().format(_listOfTx[index].date)),
-                trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => deleteTx(_listOfTx[index].id),
-                  ),
               ),
-            );
-          },
-          itemCount: _listOfTx.length,
-    );
+              title: Text(_listOfTx[index].title, style: Theme.of(context).textTheme.title,),
+              subtitle: Text(DateFormat.yMMMd().format(_listOfTx[index].date)),
+              trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => deleteTx(_listOfTx[index].id),
+                ),
+            ),
+          );
+        },
+        itemCount: _listOfTx.length,
+      );
   }
 }
