@@ -7,6 +7,7 @@ import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 import './widgets/trascation_list.dart';
 import './models/trascation.dart';
+import './widgets/pageBody.dart';
 
 
 void main() => runApp(MyApp());
@@ -135,62 +136,62 @@ class _MyHomePageState extends State<MyHomePage> {
                               - mediaQuery.padding.top) * 1,
                       child: TransactionList(_userTransactions, _deleteTransaction)
                     );
-    final pageBody = SafeArea(child: SingleChildScrollView(
-              child: 
-                Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  if(isLandScape) Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                          'Show Chart', 
-                          style: Theme.of(context).textTheme.title,
-                      ),
-                      Switch.adaptive(
-                        activeColor: Theme.of(context).accentColor,
-                        value: _showChart,
-                        onChanged: (val) {
-                          setState(() {
-                            _showChart = val;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  if(!isLandScape) Container(
-                    height: (mediaQuery.size.height - appBar.preferredSize.height
-                             - mediaQuery.padding.top) * 0.3,
-                    child: Chart(_recentTransactions)
-                  ),
+    // final pageBody = SafeArea(child: SingleChildScrollView(
+    //           child: 
+    //             Column(
+    //             // mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //             crossAxisAlignment: CrossAxisAlignment.stretch,
+    //             children: <Widget>[
+    //               if(isLandScape) Row(
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: <Widget>[
+    //                   Text(
+    //                       'Show Chart', 
+    //                       style: Theme.of(context).textTheme.title,
+    //                   ),
+    //                   Switch.adaptive(
+    //                     activeColor: Theme.of(context).accentColor,
+    //                     value: _showChart,
+    //                     onChanged: (val) {
+    //                       setState(() {
+    //                         _showChart = val;
+    //                       });
+    //                     },
+    //                   ),
+    //                 ],
+    //               ),
+    //               if(!isLandScape) Container(
+    //                 height: (mediaQuery.size.height - appBar.preferredSize.height
+    //                          - mediaQuery.padding.top) * 0.3,
+    //                 child: Chart(_recentTransactions)
+    //               ),
 
-                  if(!isLandScape) txListWidge,
+    //               if(!isLandScape) txListWidge,
 
-                  if(isLandScape)
-                    _showChart 
-                    ? Container(
-                      height: (mediaQuery.size.height 
-                              - appBar.preferredSize.height 
-                              - mediaQuery.padding.top) * 0.7,
-                      child: Chart(_recentTransactions)
-                    )
-                  // Expanded(
-                    // child: 
-                    : txListWidge
-                  // ),
-                ],
-              ),
-            ),);
+    //               if(isLandScape)
+    //                 _showChart 
+    //                 ? Container(
+    //                   height: (mediaQuery.size.height 
+    //                           - appBar.preferredSize.height 
+    //                           - mediaQuery.padding.top) * 0.7,
+    //                   child: Chart(_recentTransactions)
+    //                 )
+    //               // Expanded(
+    //                 // child: 
+    //                 : txListWidge
+    //               // ),
+    //             ],
+    //           ),
+    //         ),);
 
     return Platform.isIOS 
         ? CupertinoPageScaffold(
-            child: pageBody,
+            child: PageBody(isLandScape, mediaQuery, appBar, _userTransactions, txListWidge),
             navigationBar: appBar,
           )
         : Scaffold(
           appBar: appBar,
-            body: pageBody,
+            body: PageBody(isLandScape, mediaQuery, appBar, _userTransactions, txListWidge),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, 
             floatingActionButton: Platform.isIOS ? 
             Container()
