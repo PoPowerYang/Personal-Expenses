@@ -135,11 +135,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isLandScape = mediaQuery.orientation == Orientation.landscape;
-    final PreferredSizeWidget appBar = Platform.isIOS 
+  PreferredSizeWidget _buildAdaptiveAppBar() {
+    return Platform.isIOS 
     ? CupertinoNavigationBar(
       middle: Text(
               'Personal Expenses',
@@ -171,6 +168,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandScape = mediaQuery.orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = _buildAdaptiveAppBar();
+    
     final txListWidge = Container(
                       height: (mediaQuery.size.height - appBar.preferredSize.height 
                               - mediaQuery.padding.top) * 1,
